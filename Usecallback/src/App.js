@@ -1,25 +1,43 @@
-/* eslint-disable no-undef */
-import P from 'prop-types';
+import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect, Component } from 'react';
+
+const eventFn = () => {
+  console.log('h1 clicado');
+};
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  console.log('Pai, renderizou!');
+  const [counter, setCounter] = useState(0);
+  const [counter2, setCounter2] = useState(0);
+
+  // componentDidUpdate - executa toda vez que o component atualiza
+  // useEffect(() => {
+  //   console.log('componentDidUpdate')
+  // })
+
+  // componentDidMount - executa 1x
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then((r) => r.json())
-      .then((r) => setPosts(r));
+    document.querySelector('h1')?.addEventListener('click', eventFn);
+
+    // componentWillUmount - limpeza
+    return () => {
+      document.querySelector('h1')?.removeEventListener('click', eventFn);
+    };
   }, []);
+
+  // Com dependencia - executa toda vez que a dependencia mudar
+  useEffect(() => {
+    console.log('C1:', counter, 'C2: ', counter2);
+  }, [counter, counter2]);
+
   return (
     <div className="App">
-      {posts.map((post) => {
-        return (
-          <div key={post.id} className="post">
-            <h1>{post.title}</h1>
-            <p>{post.body}</p>
-          </div>
-        );
-      })}
+      <p> Teste 1</p>
+      <h1>
+        C1: {counter} C2: {counter2}
+      </h1>
+      <button onClick={() => setCounter(counter + 1)}>+</button>
+      <button onClick={() => setCounter2(counter2 + 1)}>+</button>
     </div>
   );
 }
