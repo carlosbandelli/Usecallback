@@ -1,0 +1,84 @@
+Se nos precisamos de um stado, nos precisamos ultilizar os constructor receber nossa props
+falar super props e podemos falar this. state que rece um objeto que te mnossa propriedades
+eu vou configurar um propriedade que tem reverse aqui no caso que vai receber false
+
+Agora eu preciso pegar esse estado aqui para fazer alguam coisa
+
+const { reverse } = this.state;
+
+
+não estamos usando a variavel então vamos usar ela,
+eu preciso de alguma coisa que vai mudar a class app-logo, então vou colocar
+template strings e vou criar uma const
+com a condição se reverse for verdadeiro eu vou configurar essa classe como
+reverse no caso s enão vou configurar essa classe com uma string vazia
+
+eu vou colocar um botão type="button" e nele eu coloco um evento chamado onClick
+vamos criar um função anonima dentro do onClick={() => this.setState({ reverse: !reverse })
+Significa assim, quando eu clicar no botão setar um estado da minha chave reverse para alguma coisa
+que for diferente de reverse.
+
+Vou usar useState() e esse useState() vai se usado para contgrolar meu estadoa e valor inicial do meu estado
+então esse useState precisa receber um  parametro inical, nosso estado incial é false
+ quando voce usar useState voce vai falar de uma coisa de dentro do seu estado, para cada um dos qu eu tiver eu vou ter
+um useState.
+
+e vou dentro do array pegar o segundo que é sempre uma função que vai setar o valor da primeira
+nesse caso vai ser o setReverse, e agora dentro da função handleClick e vamos setReverse
+
+
+Acrescentando contador
+
+vamos acresentar um estado na função app
+sempre começa com array quando voce utilizar useState e coloca o nome da vairavle qu evoce quer usar para estado, por exemplo counter
+eu nao preciso necessariamente usar o segundo parametro para se eu nao for usar esse set.
+ele recebe useState()
+
+e usamos dentro da função handleClick colocamos um set counter qu eé o segundo estado do useState
+ e agora o que vou fazer é retornar o counter mais um
+
+-------Código completo App.js-----
+
+import logo from './logo.svg';
+import './App.css';
+import { useState } from 'react';
+
+function App() {
+  const [reverse, setReverse] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const reverseClass = reverse ? 'reverse' : '';
+
+  const handleClick = () => {
+    setReverse(!reverse);
+  };
+
+  const handleIncrement = () => {
+    setCounter((prevState) => prevState + 1);
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className={`App-logo ${reverseClass}`} alt="logo" />
+
+        <h1>Contador: {counter}</h1>
+
+        <p>
+          <button type="button" onClick={handleClick}>
+            Reverse {reverseClass}
+          </button>
+        </p>
+
+        <p>
+          <button type="button" onClick={handleIncrement}>
+            Increment {counter}
+          </button>
+        </p>
+      </header>
+    </div>
+  );
+}
+
+export default App;
+
+

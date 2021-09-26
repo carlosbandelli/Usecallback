@@ -1,0 +1,93 @@
+Comparando useEffect com lyfecycle
+
+Imagine cmg que eu queira colcocar um component didUpadate, ou seja
+todo vez que eu atualizar o componente eu quero chamar uma função
+para isso vou usar um hooks chamado de hook useEffect
+
+Esse useEffect sozinho faz o trabalho de compoenete didamount,update
+para eu usar isso eu uso
+useEffect() e esse useEffectg usa com primeiro parametro uma função
+ parar fazer o update 
+
+useEffect(() =>{
+console.log('componentDidUpdate')
+});
+
+
+Para fazer componentDidAmount, ou seja o compoenent foi montado na tela executa uma vez
+e depois não executa mais.
+
+Para fazer isso eu posso fazer outro useEffect, so que dessa vez tenho que mudar o UseEffect
+alem do meu parametro que é uma função, eu tenho que passar um segundo parametro que um
+array de dependencias, so que se nós passamos um array
+que nao tem dependcias ele vai executar só uma vez
+
+
+useEffect(()=>{
+console.log('componentDidMount')
+},[])
+
+Suponha que eu quero que esse useEffect dependa do counter entãi dentro do
+array vou colocar a variavel counter e toda vez que o set counter for chamado vai 
+o setcounter vai chamar o counter
+
+ useEffect(() => {
+    console.log('C1:', counter, 'C2: ', counter2);
+  }, [counter, counter2]);
+
+
+vamos supor que eu queira fazer do meu h1 um listener
+
+----------------Código interio ---------------------
+
+import logo from './logo.svg';
+import './App.css';
+import { useState, useEffect, Component } from 'react';
+
+const eventFn = () => {
+  console.log('h1 clicado');
+};
+
+function App() {
+  const [counter, setCounter] = useState(0);
+  const [counter2, setCounter2] = useState(0);
+
+  // componentDidUpdate - executa toda vez que o component atualiza
+  // useEffect(() => {
+  //   console.log('componentDidUpdate')
+  // })
+
+  // componentDidMount - executa 1x
+  useEffect(() => {
+    document.querySelector('h1')?.addEventListener('click', eventFn);
+
+    // componentWillUmount - limpeza
+    return () => {
+      document.querySelector('h1')?.removeEventListener('click', eventFn);
+    };
+  }, []);
+
+  // Com dependencia - executa toda vez que a dependencia mudar
+  useEffect(() => {
+    console.log('C1:', counter, 'C2: ', counter2);
+  }, [counter, counter2]);
+
+  return (
+    <div className="App">
+      <p> Teste 1</p>
+      <h1>
+        C1: {counter} C2: {counter2}
+      </h1>
+      <button onClick={() => setCounter(counter + 1)}>+</button>
+      <button onClick={() => setCounter2(counter2 + 1)}>+</button>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+
+
